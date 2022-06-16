@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<row>
+		<data_poczatkowa>
+			2022-03-09
+		</data_poczatkowa>
+		<data_koncowa>
+			2022-03-12
+		</data_koncowa>
+		<wykonano_szczepien>
+			59995
+		</wykonano_szczepien>
+		<zmarlo>
+			247
+		</zmarlo>
+	</row>
+	<row>
+		<data_poczatkowa>
+			2022-02-09
+		</data_poczatkowa>
+		<data_koncowa>
+			2022-03-12
+		</data_koncowa>
+		<wykonano_szczepien>
+			1156180
+		</wykonano_szczepien>
+		<zmarlo>
+			5937
+		</zmarlo>
+	</row>
+	<row>
+		<data_poczatkowa>
+			2022-01-09
+		</data_poczatkowa>
+		<data_koncowa>
+			2022-03-12
+		</data_koncowa>
+		<wykonano_szczepien>
+			5321819
+		</wykonano_szczepien>
+		<zmarlo>
+			13581
+		</zmarlo>
+	</row>
+</root>

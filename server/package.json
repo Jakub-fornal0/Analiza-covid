@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "axios": "^0.27.2",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.0",
+    "convertjson2xml": "^0.1.11",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "express-validator": "^6.14.1",
+    "fast-xml-parser": "^4.0.8",
+    "fs": "^0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
+    "jstoxmlparser": "^1.0.2",
+    "mysql": "^2.18.1",
+    "path": "^0.12.7",
+    "x2js": "^3.4.3",
+    "xml-js": "^1.6.11",
+    "xml2js": "^0.4.23"
+  }
+}
