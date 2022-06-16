@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Statystyki Covid-19</title>
+    <link href="style.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="indexmain">
+      <div class="center">
+        <button onClick="wyloguj()">Wyloguj się</button>
+      </div>
+      <div class="center">
+        <h1>Pobierz dane z wybranego formatu:</h1>
+        <button class="green" onClick="sendJSON()">JSON</button>
+        <button class="green" onClick="sendXML()">XML</button>
+        <p id="result"></p>
+      </div>
+      <div class="center">
+        <input id="data_pocz" type="text" placeholder="Początek (rrrr-mm-dd)" />
+        <input id="data_konc" type="text" placeholder="Koniec (rrrr-mm-dd)" />
+        <button onClick="obliczjson()">Sprawdz i zapisz w formacie JSON</button>
+      </div>
+      <div class="center"><p id="wynik"></p></div>
+      <div class="center">
+        <button onClick="zapiszXML()">Zapisz wyniki w formacie XML</button>
+      </div>
+      <div class="center">
+        <p id="zapiszxml"></p>
+      </div>
+      <div id="historia_wyszukiwan"></div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function (event) {
+        const user = localStorage.getItem("token");
+        if (!user) {
+          window.location.replace("login.html");
+        }
+        pobierzWyniki();
+      });
+
+      function wyloguj() {
+        localStorage.removeItem("token");
+        window.location.reload();
+      }
+
+      function sendJSON() {
+        fetch("http://localhost:3000/api/pobierzjson").then(function (
+          response
+        ) {
+          return response.text().then(function (text) {
+            document.getElementById("result").innerHTML = text;
+          });
+        });
+      }
+
+      function sendXML() {
+        fetch("http://localhost:3000/api/pobierzxml").then(function (response) {
+          return response.text().then(function (text) {
+            document.getElementById("result").innerHTML = text;
+          });
+        });
+      }
+
+      function obliczjson() {
+        var p = document.getElementById("data_pocz").value;
+        var k = document.getElementById("data_konc").value;
+        fetch("http://localhost:3000/api/obliczjson", {
+          method: "post",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            poczatek: p,
+            koniec: k,
+          }),
+        }).then(function (response) {
+          return response.text().then(function (text) {
+            document.getElementById("wynik").innerHTML = text;
+          });
+        });
+        setTimeout(pobierzWyniki, 100);
+      }
+
+      function pobierzWyniki() {
+        fetch("http://localhost:3000/api/pobierzWyniki")
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            data = JSON.parse(data);
+            var el = document.getElementById("historia_wyszukiwan");
+            if (data.length > 0) {
+              var str = "<div class='center'><p>Twoje wyniki:</p></div>";
+              str +=
+                "<table><tr><th>Data początkowa</th><th>data końcowa</th><th>ilość szczepień</th><th>ilość zgonów</th></tr>";
+              for (let i = 0; i < data.length; i++) {
+                str +=
+                  "<tr><td>" +
+                  data[i].data_poczatkowa +
+                  "</td><td>" +
+                  data[i].data_koncowa +
+                  "</td><td>" +
+                  data[i].wykonano_szczepien +
+                  "</td><td>" +
+                  data[i].zmarlo +
+                  "</td></tr>";
+              }
+              str += "</table>";
+              el.innerHTML = str;
+            } else {
+              var str = "<p>Brak wynikow.</p>";
+              el.innerHTML = str;
+            }
+          });
+      }
+
+      function zapiszXML() {
+        fetch("http://localhost:3000/api/zapiszxml").then(function (response) {
+          return response.text().then(function (text) {
+            document.getElementById("zapiszxml").innerHTML = text;
+          });
+        });
+      }
+    </script>
+  </body>
+</html>

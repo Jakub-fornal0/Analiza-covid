@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Statystyki Covid-19</title>
+    <link href="style.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="main">
+      <h1>Zarejestruj się:</h1>
+      <form>
+        <div>
+          <div class="pdd">
+            <input
+              type="text"
+              placeholder="Wprowadz nazwe"
+              name="name"
+              id="name"
+              required
+            />
+          </div>
+          <div class="pdd">
+            <input
+              type="text"
+              placeholder="Wprowadz email"
+              name="email"
+              id="email"
+              required
+            />
+          </div>
+          <div class="pdd">
+            <input
+              type="password"
+              placeholder="Wprowadz hasło"
+              name="password"
+              id="password"
+              required
+            />
+          </div>
+          <div class="center pdd">
+            <button type="button" id="register">Zarejestruj się</button>
+          </div>
+        </div>
+      </form>
+      <div><a href="login.html">Zaloguj się</a></div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function (event) {
+        var zarejestruj = document.getElementById("register");
+        let button = zarejestruj.addEventListener("click", (e) => {
+          e.preventDefault();
+          var name = document.getElementById("name").value;
+          var email = document.getElementById("email").value;
+          var password = document.getElementById("password").value;
+          const register = "http://localhost:3000/api/register";
+
+          fetch(register, {
+            method: "POST",
+            headers: {
+              Accept: "application/json, text/plain, */*",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: name,
+              email: email,
+              password: password,
+            }),
+          })
+            .then((response) => {
+              return response.json();
+            })
+            .then((data) => {
+              //data = JSON.parse(data);
+              if (data.error) {
+                console.log(data.error);
+                alert("Złe dane");
+              } else {
+                console.log(data.msg);
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        });
+      });
+    </script>
+  </body>
+</html>
